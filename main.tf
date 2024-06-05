@@ -35,7 +35,7 @@ variable "static_web_app_name" {
 
 variable "acr_name" {
   description = "Name of the Azure Container Registry (ACR)"
-  default     = "myacrteam4"
+  default     = "myacrteam4project"
 }
 
 variable "aks_cluster_name" {
@@ -56,7 +56,8 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
   administrator_password = var.mysql_admin_password
-  
+  sku_name            = "MYSQL_GP_Gen5_0"
+  create_mode         = "Default"  
 
   tags = {
     environment = "production"
