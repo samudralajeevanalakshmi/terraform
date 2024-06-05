@@ -41,9 +41,13 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
-  administrator_password = var.mysql_admin_password
-  sku_name            = "GP_Gen5_2"
+  admin_password      = var.mysql_admin_password
+  sku_name            = "Standard_D2s_v3"
+  charset             = "utf8mb4"
 
+  storage {
+    storage_size_gb = 20
+  }
 }
 
 # Static Web App
