@@ -22,10 +22,14 @@ jobs:
         with:
           terraform_version: 1.0.0
 
+      - name: 'Create Azure Service Principal'
+        run: az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/d3c4c04e-a256-42ee-bfb5-4f215467c340"
+        id: create_sp
+
       - name: 'Login to Azure'
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ steps.create_sp.outputs.stdout }}
 
       - name: 'Terraform Init'
         run: terraform init
