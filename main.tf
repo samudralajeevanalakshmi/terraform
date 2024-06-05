@@ -52,10 +52,6 @@ resource "azurerm_container_registry" "acr" {
   location            = var.location
   sku                 = "Standard"
   admin_enabled       = true
-
-  georeplications {
-    location = "westus"
-  }
 }
 
 # MySQL Flexible Server
@@ -114,7 +110,7 @@ resource "azurerm_static_site" "static_web_app" {
   }
 
   github_action_configuration {
-    repo_url      = "https://github.com/samudralajeevanalakshmi/terraform"
+    repo_url      = "https://github.com/yourusername/yourrepo"
     branch        = "main"
     token_secret  = "GITHUB_TOKEN"
   }
