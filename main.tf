@@ -49,7 +49,7 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
 
   sku_name            = "B_Standard_B1ms"  # Valid SKU name for the flexible server
   storage {
-    size_gb = 20  # Setting storage to 5GB
+    size_gb = 20  # Minimum storage size is 20GB
   }
 
   version             = "5.7"
@@ -73,7 +73,7 @@ resource "azurerm_static_site" "static_web_app" {
 
 # Azure Container Registry (ACR)
 resource "azurerm_container_registry" "acr" {
-  name                = "acrteam4"
+  name                = "acrteam4project"
   resource_group_name = azurerm_resource_group.main.name
   location            = var.location
   sku                 = "Basic"
