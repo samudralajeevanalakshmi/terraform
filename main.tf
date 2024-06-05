@@ -5,32 +5,32 @@ provider "azurerm" {
 # Define variables
 variable "resource_group_name" {
   description = "Name of the resource group"
-  default = "team4"
+  default     = "team4"
 }
 
 variable "location" {
   description = "Azure region location"
-  default = "EAST US"
+  default     = "East US"
 }
 
 variable "mysql_server_name" {
   description = "Name of the MySQL Flexible Server"
-  default = "mysqlserverteam4"
+  default     = "mysqlserverteam4"
 }
 
 variable "mysql_admin_username" {
   description = "Admin username for the MySQL Flexible Server"
-  default = "jeevana"
+  default     = "jeevana"
 }
 
 variable "mysql_admin_password" {
   description = "Admin password for the MySQL Flexible Server"
-  default = "Project123@"
+  default     = "Project123@"
 }
 
 variable "static_web_app_name" {
   description = "Name of the Static Web App"
-  default = "mywebappteam4"
+  default     = "mywebappteam4"
 }
 
 # Resource Group
@@ -42,18 +42,29 @@ resource "azurerm_resource_group" "main" {
 # MySQL Flexible Server
 resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   name                = var.mysql_server_name
-  location            = var.location
+  location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
-  admin_password = var.mysql_admin_password
-  sku_name            = "Standard_D2s_v3"
+  administrator_login_password = var.mysql_admin_password
+  sku_name            = "MySQLFree"
 
-  storage_profile {
-    storage_size_gb = 20
-    storage_auto_grow_enabled = true
+  storage {
+    storage_size_gb = 5  # 5GB is the maximum storage for the free tier
+  }
+
+  backup {
+    backup_retention_days = 7
+    geo_redundant_backup  = "Disabled"
+  }
+
+  network {
+    # Add your network configuration here if necessary
+  }
+
+  tags = {
+    environment = "production"
   }
 }
-
 
 # Static Web App
 resource "azurerm_static_site" "static_web_app" {
@@ -61,7 +72,9 @@ resource "azurerm_static_site" "static_web_app" {
   resource_group_name = azurerm_resource_group.main.name
   location            = var.location
 
-
+  sku {
+    tier = "Free"
+  }
 
   identity {
     type = "SystemAssigned"
