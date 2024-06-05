@@ -56,7 +56,7 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
   administrator_password = var.mysql_admin_password
-  sku_name            = "MYSQL_GP_Gen5_1"
+  sku_name            = "MYSQL_GP_Gen5_8"
   create_mode         = "Default"  
 
   tags = {
