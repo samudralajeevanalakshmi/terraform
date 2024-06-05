@@ -1,7 +1,7 @@
 # Define variables
 variable "resource_group_name" {
   description = "Name of the resource group"
-  deafult = "team4"
+  default = "team4"
 }
 
 variable "location" {
