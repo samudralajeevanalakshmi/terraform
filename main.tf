@@ -65,7 +65,6 @@ resource "azurerm_static_site" "static_web_app" {
   name                = var.static_web_app_name
   resource_group_name = azurerm_resource_group.main.name
   location            = var.location
-  sku                 = "Basic"
 
   identity {
     type = "SystemAssigned"
