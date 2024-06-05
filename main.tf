@@ -45,16 +45,11 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
-  administrator_login_password = var.mysql_admin_password
-  sku_name            = "MySQLFree"
+  administrator_password = var.mysql_admin_password
+  sku_name            = "MYSQL_GP_Gen5_2"
 
-  storage_profile {
-    storage_size_gb = 5  # 5GB is the maximum storage for the free tier
-  }
-
-  backup {
-    retention_days = 7
-    geo_redundant_backup  = "Disabled"
+  tags = {
+    environment = "production"
   }
 }
 
@@ -63,10 +58,6 @@ resource "azurerm_static_site" "static_web_app" {
   name                = var.static_web_app_name
   resource_group_name = azurerm_resource_group.main.name
   location            = var.location
-
-  sku {
-    tier = "Free"
-  }
 
   identity {
     type = "SystemAssigned"
