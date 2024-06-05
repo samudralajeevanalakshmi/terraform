@@ -56,6 +56,7 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
   administrator_password = var.mysql_admin_password
+  sku = "Standard"
   create_mode         = "Default"  
 
   tags = {
@@ -95,6 +96,7 @@ resource "azurerm_static_site" "static_web_app" {
   name                = var.static_web_app_name
   resource_group_name = azurerm_resource_group.main.name
   location            = var.location
+  sku_tier            = "Standard"  # Updated to a supported tier
 
   identity {
     type = "SystemAssigned"
