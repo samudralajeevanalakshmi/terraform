@@ -56,8 +56,10 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
   administrator_password = var.mysql_admin_password
-  sku = "Standard"
-  create_mode         = "Default"  
+  sku_name            = "B_Standard_B1ms"  # Valid SKU name for the flexible server
+
+  storage_mb          = 5120  # Setting storage to 5GB (5120MB)
+  version             = "5.7"
 
   tags = {
     environment = "production"
