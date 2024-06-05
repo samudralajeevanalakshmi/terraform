@@ -60,21 +60,8 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
-  administrator_login_password = var.mysql_admin_password
+  administrator_password = var.mysql_admin_password
   sku_name            = "GP_Gen5_2"
-
-  storage {
-    storage_size_gb = 20
-  }
-
-  backup {
-    backup_retention_days = 7
-    geo_redundant_backup  = "Disabled"
-  }
-
-  network {
-    delegated_subnet_id = azurerm_subnet.aks.id
-  }
 
   tags = {
     environment = "production"
