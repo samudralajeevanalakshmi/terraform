@@ -49,7 +49,7 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
 
   sku_name            = "B_Standard_B1ms"  # Valid SKU name for the flexible server
   storage {
-    size_gb = 5  # Setting storage to 5GB
+    size_gb = 20  # Setting storage to 5GB
   }
 
   version             = "5.7"
