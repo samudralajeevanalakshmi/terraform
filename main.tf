@@ -61,21 +61,21 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
 }
 
 # Static Web App
-resource "azurerm_static_site" "static_web_app" {
-  name                = var.static_web_app_name
-  resource_group_name = azurerm_resource_group.main.name
-  location            = var.location
-  sku_tier            = "Standard"  # Updated to a supported tier
+#resource "azurerm_static_site" "static_web_app" {
+ # name                = var.static_web_app_name
+ # resource_group_name = azurerm_resource_group.main.name
+  #location            = var.location
+  #sku_tier            = "Standard"  # Updated to a supported tier
 
-  identity {
-    type = "SystemAssigned"
-  }
+  #identity {
+   # type = "SystemAssigned"
+  #}
 
-  tags = {
-    environment = "production"
-    costcenter  = "team4"
-  }
-}
+  #tags = {
+   # environment = "production"
+    #costcenter  = "team4"
+  #}
+#}
 
 # Azure Container Registry (ACR)
 resource "azurerm_container_registry" "acr" {
