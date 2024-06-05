@@ -1,26 +1,32 @@
 # Define variables
 variable "resource_group_name" {
   description = "Name of the resource group"
+  deafult = "team4"
 }
 
 variable "location" {
   description = "Azure region location"
+  default = "EAST US"
 }
 
 variable "mysql_server_name" {
   description = "Name of the MySQL Flexible Server"
+  default = "mysqlserverteam4"
 }
 
 variable "mysql_admin_username" {
   description = "Admin username for the MySQL Flexible Server"
+  default = "jeevana"
 }
 
 variable "mysql_admin_password" {
   description = "Admin password for the MySQL Flexible Server"
+  default = "Project123@"
 }
 
 variable "static_web_app_name" {
   description = "Name of the Static Web App"
+  default = "mywebappteam4"
 }
 
 # Resource Group
