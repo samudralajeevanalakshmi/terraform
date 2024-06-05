@@ -41,10 +41,12 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
+  administrator_login_password = var.mysql_admin_password
   sku_name            = "Standard_D2s_v3"
 
-  storage {
+  storage_profile {
     storage_size_gb = 20
+    storage_auto_grow_enabled = true
   }
 }
 
