@@ -13,5 +13,5 @@ provider "mysql" {
   endpoint = azurerm_mysql_flexible_server.mysql_flexible_server.fqdn
   username = "${var.mysql_admin_username}@${var.mysql_server_name}"
   password = var.mysql_admin_password
-  database = "mysqlteam4"
+  database = "mysql"
 }
