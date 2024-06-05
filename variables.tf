@@ -16,6 +16,12 @@ variable "aks_cluster_name" {
   default     = "my-aks-cluster"
 }
 
+variable "acr_name" {
+  description = "Name of the Azure Container Registry"
+  type        = string
+  default     = "myacrteam4"
+}
+
 variable "mysql_server_name" {
   description = "Name of the MySQL server"
   type        = string
@@ -39,4 +45,10 @@ variable "static_web_app_name" {
   description = "Name of the Static Web App"
   type        = string
   default     = "my-static-web-app"
+}
+
+variable "mysql_database_name" {
+  description = "Name of the MySQL database"
+  type        = string
+  default     = "mydatabase"
 }
