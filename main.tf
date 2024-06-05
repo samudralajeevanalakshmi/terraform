@@ -82,7 +82,7 @@ resource "azurerm_static_site" "static_web_app" {
   }
 
   github_action_configuration {
-    repo_url      = "https://github.com/yourusername/yourrepo"
+    repo_url      = "https://github.com/samudralajeevanalakshmi/terraform"
     branch        = "main"
     token_secret  = "GITHUB_TOKEN"
   }
