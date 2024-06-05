@@ -48,21 +48,13 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   administrator_login_password = var.mysql_admin_password
   sku_name            = "MySQLFree"
 
-  storage {
+  storage_profile {
     storage_size_gb = 5  # 5GB is the maximum storage for the free tier
   }
 
   backup {
-    backup_retention_days = 7
+    retention_days = 7
     geo_redundant_backup  = "Disabled"
-  }
-
-  network {
-    # Add your network configuration here if necessary
-  }
-
-  tags = {
-    environment = "production"
   }
 }
 
