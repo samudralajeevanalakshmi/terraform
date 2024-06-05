@@ -33,16 +33,6 @@ variable "static_web_app_name" {
   default     = "mywebappteam4"
 }
 
-variable "acr_name" {
-  description = "Name of the Azure Container Registry (ACR)"
-  default     = "myacrteam4project"
-}
-
-variable "aks_cluster_name" {
-  description = "Name of the Azure Kubernetes Service (AKS) cluster"
-  default     = "myaksteam4"
-}
-
 # Resource Group
 resource "azurerm_resource_group" "main" {
   name     = var.resource_group_name
@@ -56,40 +46,16 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   resource_group_name = azurerm_resource_group.main.name
   administrator_login = var.mysql_admin_username
   administrator_password = var.mysql_admin_password
-  sku_name            = "B_Standard_B1ms"  # Valid SKU name for the flexible server
 
-  storage_mb          = 5120  # Setting storage to 5GB (5120MB)
+  sku_name            = "B_Standard_B1ms"  # Valid SKU name for the flexible server
+  storage {
+    size_gb = 5  # Setting storage to 5GB
+  }
+
   version             = "5.7"
 
   tags = {
     environment = "production"
-  }
-}
-
-# Azure Container Registry (ACR)
-resource "azurerm_container_registry" "acr" {
-  name                = var.acr_name
-  resource_group_name = azurerm_resource_group.main.name
-  location            = var.location
-  sku                 = "Standard"
-  admin_enabled       = true
-}
-
-# Azure Kubernetes Service (AKS)
-resource "azurerm_kubernetes_cluster" "aks" {
-  name                = var.aks_cluster_name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  dns_prefix          = var.aks_cluster_name
-
-  default_node_pool {
-    name       = "default"
-    node_count = 1
-    vm_size    = "Standard_DS2_v2"
-  }
-
-  identity {
-    type = "SystemAssigned"
   }
 }
 
@@ -102,5 +68,40 @@ resource "azurerm_static_site" "static_web_app" {
 
   identity {
     type = "SystemAssigned"
+  }
+}
+
+# Azure Container Registry (ACR)
+resource "azurerm_container_registry" "acr" {
+  name                = "acrteam4"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = var.location
+  sku                 = "Basic"
+  admin_enabled       = true
+
+  tags = {
+    environment = "production"
+  }
+}
+
+# Azure Kubernetes Service (AKS)
+resource "azurerm_kubernetes_cluster" "aks" {
+  name                = "aksteam4"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+  dns_prefix          = "aksteam4"
+
+  default_node_pool {
+    name       = "default"
+    node_count = 1
+    vm_size    = "Standard_DS2_v2"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  tags = {
+    environment = "production"
   }
 }
