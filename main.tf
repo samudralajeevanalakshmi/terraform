@@ -10,7 +10,7 @@ variable "resource_group_name" {
 
 variable "location" {
   description = "Azure region location"
-  default     = "East US"
+  default     = "eastus2"
 }
 
 variable "mysql_server_name" {
@@ -27,6 +27,7 @@ variable "mysql_admin_password" {
   description = "Admin password for the MySQL Flexible Server"
   default     = "Project123@"
 }
+
 variable "app_service_plan_name" {
   description = "The name of the App Service Plan"
   type        = string
@@ -67,7 +68,7 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
   version = "5.7"
 
   tags = {
-    environment = "production"
+    environment = "development"
   }
 }
 
@@ -80,7 +81,7 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = true
 
   tags = {
-    environment = "production"
+    environment = "development"
   }
 }
 
@@ -102,7 +103,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   tags = {
-    environment = "production"
+    environment = "development"
   }
 }
 
@@ -136,7 +137,10 @@ resource "azurerm_app_service" "appaser" {
 }
 
 resource "azurerm_static_web_app" "example" {
-  name                = "revhirestatic"  # Replace with your static web app name
+  name                = var.static_web_app_name  # Replace with your static web app name
   resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
+  location            = "eastus2"  # Set to an available region for static web app
+  tags = {
+    environment = "development"
+  }
 }
