@@ -107,34 +107,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 
-resource "azurerm_service_plan" "appserplan" {
-  name                = "my-app-service-plan"  # Replace with your app service plan name
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  sku_name            = "B1"  
-  os_type             = "Linux"  
-}
 
-resource "azurerm_app_service" "appaser" {
-  name                = "revhireappserviceteam4"  
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-  app_service_plan_id = azurerm_service_plan.appserplan.id
-
-  app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
-  }
-
-  site_config {
-    always_on = true
-  }
-
-  lifecycle {
-    ignore_changes = [
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"]
-    ]
-  }
-}
 
 resource "azurerm_static_web_app" "example" {
   name                = var.static_web_app_name  # Replace with your static web app name
