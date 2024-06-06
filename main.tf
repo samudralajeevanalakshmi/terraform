@@ -27,6 +27,17 @@ variable "mysql_admin_password" {
   description = "Admin password for the MySQL Flexible Server"
   default     = "Project123@"
 }
+variable "app_service_plan_name" {
+  description = "The name of the App Service Plan"
+  type        = string
+  default     = "team4-app-service-plan"
+}
+
+variable "app_service_name" {
+  description = "The name of the App Service"
+  type        = string
+  default     = "appservice"
+}
 
 variable "static_web_app_name" {
   description = "Name of the Static Web App"
@@ -59,23 +70,6 @@ resource "azurerm_mysql_flexible_server" "mysql_flexible_server" {
     environment = "production"
   }
 }
-
-# Static Web App
-#resource "azurerm_static_site" "static_web_app" {
- # name                = var.static_web_app_name
- # resource_group_name = azurerm_resource_group.main.name
-  #location            = var.location
-  #sku_tier            = "Standard"  # Updated to a supported tier
-
-  #identity {
-   # type = "SystemAssigned"
-  #}
-
-  #tags = {
-   # environment = "production"
-    #costcenter  = "team4"
-  #}
-#}
 
 # Azure Container Registry (ACR)
 resource "azurerm_container_registry" "acr" {
@@ -110,4 +104,39 @@ resource "azurerm_kubernetes_cluster" "aks" {
   tags = {
     environment = "production"
   }
+}
+
+resource "azurerm_service_plan" "appserplan" {
+  name                = "my-app-service-plan"  # Replace with your app service plan name
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  sku_name            = "B1"  
+  os_type             = "Linux"  
+}
+
+resource "azurerm_app_service" "appaser" {
+  name                = "revhireappserviceteam4"  
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  app_service_plan_id = azurerm_service_plan.appserplan.id
+
+  app_settings = {
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+  }
+
+  site_config {
+    always_on = true
+  }
+
+  lifecycle {
+    ignore_changes = [
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"]
+    ]
+  }
+}
+
+resource "azurerm_static_web_app" "example" {
+  name                = "revhirestatic"  # Replace with your static web app name
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
 }
